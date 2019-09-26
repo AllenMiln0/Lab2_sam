@@ -55,78 +55,65 @@ public:
 
 class team {
 private:
-	member one;
-	member two;
-	member three;
+	member one[3];
 
-	float success_one;
-	float success_two;
-	float success_three;
+	float success[3];
 
 	char mas[100];
 public:
 
 	void display() {
 		cout << "Название команды: " << mas << endl;
-		one.display();
-		two.display();
-		three.display();
+		for (int i = 0; i < 3; i++) {
+			one[i].display();
+		}
 	}
 
 	void real_profit() {
-		float sum_one, sum_two, sum_three;
-		success_one = one.profit();
-		success_two = two.profit();
-		success_three = three.profit();
-
-		float sum = (success_one + success_two + success_three)/3.;
+		float sum = 0;
+		for (int i = 0; i < 3; i++) {
+			success[i] = one[i].profit();
+			sum += success[i];
+			sum /= 3.;
+		}
 		cout << "Вероятность успеха всей команды: " << sum << endl << endl << endl;
 	}
 
 	// второй метод
 	void min_profit() {
-		float c1, c2, c3;
+		float c1[3];
 		int c_end;
-		c1 = one.all_cups();
-		c2 = two.all_cups();
-		c3 = three.all_cups();
-		if (c1 < c2) {
-			if (c3 < c1) c_end = 3;
-			else c_end = 1;
-		}
-		else {
-			if (c3 > c2) c_end = 2;
-			else c_end = 3;
-		}
 
-		if (c_end == 1) cout << "Наименьший объем выпитого кофе: первый" << endl << endl << endl;
-		else {
-			if (c_end == 2) cout << "Наименьшая объем выпитого кофе: второй" << endl << endl << endl;
-			else cout << "Наименьшая объем выпитого кофе: третий" << endl << endl << endl;
+		for (int i = 0; i < 3; i++) {
+			c1[i] = one[i].all_cups();
 		}
+		c_end = c1[0];
+		for (int i = 0; i < 3; i++)
+			if (c_end < c1[i]) c_end = c1[i];
+
+		int t;
+		for (int i = 0; i < 3; i++)
+			if (c_end == c1[i]) t = i;
+
+		cout << "Наименьший объем выпитого кофе: "<< (t+1) << endl << endl << endl;
 	}
 
 	void profit() {
-		float one_p, two_p, three_p;
-		one_p = one.all_cups();
-		two_p = two.all_cups();
-		three_p = three.all_cups();
+		float one_p[3];
+		for (int i = 0; i < 3; i++) {
+			one_p[i] = one[i].all_cups();
 
-		cout << "Количество выпитых чашек первым участником: " << one_p << endl;
-		cout << "Количество выпитых чашек вторым участником: " << two_p << endl;
-		cout << "Количество выпитых чашек третьим участником: " << three_p << endl << endl << endl;
+			cout << "Количество выпитых чашек " << i+1 << " участником: " << one_p[i] << endl;
+		}
 	}
 
 	void read_team() {
 		cout << "Введите название команды" << endl;
 		fflush(stdin);
-		fflush(stdin);
-		fflush(stdin);
 		cin >> mas;
 	
-		one.read();
-		two.read();
-		three.read();
+		for (int i = 0; i < 3; i++)
+			one[i].read();
 
 	}
 };
