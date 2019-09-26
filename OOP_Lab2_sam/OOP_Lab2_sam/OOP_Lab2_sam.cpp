@@ -55,12 +55,18 @@ public:
 
 class team {
 private:
-	member one[3];
-
+	member *one;
 	float success[3];
-
 	char mas[100];
 public:
+	team() {
+		one = new member[3];
+	}
+
+	~team(){
+		delete[] one;
+	}
+
 
 	void display() {
 		cout << "Название команды: " << mas << endl;
